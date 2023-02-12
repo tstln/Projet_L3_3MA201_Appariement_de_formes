@@ -1,4 +1,4 @@
-# [L3][Projet 3MA201]Appariement de formes
+# [Projet 3MA201] Appariement de formes
 
 Projet dans le cadre de l'UE LU3MA201 en L3 Mathématiques à Sorbonne Université, 2022-2023. 
 
