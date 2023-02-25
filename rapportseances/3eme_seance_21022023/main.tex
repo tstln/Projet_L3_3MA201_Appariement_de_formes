@@ -1,0 +1,105 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{calrsfs}
+
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{float}
+
+
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+
+
+% Load the parskip package without options
+\usepackage{parskip}
+
+% Useful shortcuts
+\newcommand*{\N}{\mathbb{N}} 
+\newcommand*{\Z}{\mathbb{Z}} 
+\newcommand*{\Q}{\mathbb{Q}} 
+\newcommand*{\R}{\mathbb{R}} 
+\newcommand*{\C}{\mathbb{C}} 
+\newcommand*{\Rl}{\mathbb{R}^l} 
+\newcommand*{\id}{\text{id}_{\Rl}} 
+\newcommand*{\diff}{\mathrm{d}} 
+
+\DeclareMathOperator{\Dist}{Dist}
+\DeclareMathOperator{\card}{card}
+
+
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Compte rendu de la 3\up{e} séance du 21 février}
+\author{Victor}
+
+\begin{document}
+\maketitle
+
+\section{Retour sur les questions précédentes (petites déformations)}
+
+Victor présente les avancées autour de la distance \( \Dist \). Il s'agit en fait de la distance de \textsc{Hausdorff}. Discussion autour de la séparabilité, qui n'est valable que pour les supports. Cela confirme le fait qu'on peut comparer des parties ou des \( k \)-uplets qui n'ont pas le même nombre d'éléments, et donc d'étendre la \og{}distance\fg{} à l'ensemble des parties finies de \( \Rl \).
+
+Question sur la nature du \( V \) : c'est un choix de modélisation. On le choisit à partir des données et de l'analyse a priori.
+
+Garance présente les avancées autour des questions 3 et 6 (conditions d'inversibilité pour les éléments de \( V \) et base de \( V \)). Mme \textsc{Gris} suggère la piste suivante. Comme c'est l'injectivité qui nous intéresse, on considère pour \( x, y \in \Rl \)
+\begin{align*}
+    \varphi(x) = \varphi(y) \iff x - y = v(x) - v(y)
+\end{align*}
+Afin de trouver des critères qui rendraient cette égalité impossible, on peut considérer :
+\begin{itemize}
+    \item \( v \) \(k\)-lipschitzienne avec \( k < 1\)
+    \item chercher une inégalité du genre \[ |v(x)-v(y)| \leq \sup_{[x,y]} ||\diff v|| |x-y| \]
+    nous suggérons de chercher du côté des accroissements finis.
+    Plus généralement, chercher un lien \[ |v|_{V} \sim \sup_{k \leq p, x \in \Rl} |\diff^k v(x)| \] par exemple en munissant l'ensemble \( \mathcal{C}^p_0 (\Rl, \Rl) \) des fonctions de classe \( \mathcal{C}^p \) qui tendent vers 0 en l'infini de cette norme.
+    Ce sera le cas si on dispose d'une injection continue \[ V_{|.|_V} \hookrightarrow \mathcal{C}^p_0 (\Rl, \Rl)\]
+    l'espace d'arrivée étant muni de la norme ci-dessus.
+\end{itemize}
+Le théorème d'inversion globale demande de connaître l'injectivité a priori.
+Concernant la question des bases de \( V \), une piste est d'examiner ce qui se passe à l'infini (cas particulier d'espace à noyau reproduisant).
+
+Yddir présente les avancées autour de l'existence de l'appariement inexact : nous avons aussi eu l'idée d'utiliser un argument de compacité. C'est la bonne piste et on n'est plus très loin du résultat.
+
+Thomas présente les travaux d'implémentation : toutes les fonctions utilitaires (dessin de nuage de points, de grilles, en couleurs, de leur déformations, de champ de vecteurs). Début d'implémentation de la descente de gradient pour l'appariement inexact en petites déformations, mais visiblement \texttt{numpy.gradient} ne nous permettra pas d'obtenir le résultat souhaité pour notre application. Implémenter à la main la descente de gradient et nous travaillerons la semaine prochaine avec \texttt{pytorch}.
+
+Un rendez-vous est pris pour la semaine suivante, le 1\up{er} mars. Finir les petites déformations pour la prochaine fois.
+
+\section{Généralisation et direction de travail pour les semaines suivantes}
+
+La discussion s'oriente sur la distinction faite entre \og{}déformation\fg{} et \og{}perturbation\fg{}. 
+
+L'écriture \( \varphi = \id + v \) suppose de disposer d'une structure additive sur les formes, ce qui n'est pas forcément pertinent. On va donc généraliser ce qu'on avait précédemment. Au lieu de considérer \( v \in V \subset \mathcal{C}^n(\Rl) \) un champ de vecteur, on va considérer une variété \( S \) et se donner un champ de vecteurs tangents à la variété : \( v(x) \in T_x S\).
+
+Pour un champ de vecteurs \( v \in V \), on définit son \og{}flot\fg{} comme suit :
+\begin{align*}
+    \varphi^v : [0,1] \mapsto \Rl \\
+    \text{tel que } \varphi^v(0,x) = x \text{ pour tout } x \in \Rl \\
+    \text{et } \frac{\partial \varphi^v}{\partial t} (t, x) = v \circ \varphi(t, x)
+\end{align*}
+
+Les questions qu'il nous faudra examiner sont les suivantes :
+\begin{enumerate}
+    \item Existence et unicité de \( \varphi^v \) pour \( v \in V \)
+    \item Est-ce \( \varphi^v_{t_0} \) est un difféomorphisme ?
+    \item Régularité de \(\varphi^v_{t_0} \), comparer avec celle de \( v \).
+    \item Existence de l'appariement inexact \[ J_{S, T} (v) = |v|_{V}^2 + \lambda \Dist(\varphi^v_{t=1} \cdot S,T)\]
+\end{enumerate}
+
+Il s'agit là d'un appariement par difféomorphismes, ou \og{}grandes déformations\fg{}.
+
+Remarque : les difféomorphismes forment un ouvert.
+
+\end{document}
