@@ -1,1 +1,122 @@
-rien encore (demander Yddir)
+\documentclass[nobib]{MSword}
+
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+
+\setlength{\parindent}{0pt}
+
+\title{Projet - séance du 24/01/2023}
+\date{séance du 24/01/2023}
+\author{Lyna BOUSSENA}
+
+
+\begin{document}
+
+\maketitle
+Compte-rendu de la première séance avec Barbara Gris dans le contexte de l'UE LU3MA201 (projet). Le sujet abordé est le suivant: "Comment transformer une cloche en chapeau?".
+
+\subsection*{Rappels sur le déroulement de l'UE}
+
+Au début de chaque séance avec Barbara Gris, un élève expose \textbf{oralement} la travail fait précédent ladite séance: difficultés rencontrées ou surmontées, en groupe ou individuellement, objections sur la séance précédente, initiatives prises, tentatives d'approfondissement. 
+\\ \\ \textbf{Chaque élève} devra aussi envoyer à l'encadrante un compte-rendu écrit de son travail individuel.
+\\ \\Après chaque séance, un membre du groupe devra rédiger un compte rendu \textbf{écrit} reprenant ce qui y a été dit. 
+\\ \\ Il y aura en plus à faire, en groupe, un rapport \textbf{écrit } de mi-semestre vers début mars, et le rapport de fin de projet. 
+
+
+\subsection*{Appariement de formes par déformation}
+
+\fbox{\textsc{Définition}} Etant donné une forme source S et une forme cible T, on essaye de trouver une déformation $\varphi$ telle que $$\varphi \bullet S \simeq T $$ (=" $\varphi$ appliqué à $S$ $\simeq T$"), le tout avec un coût minimal. Il faudra définir selon le cas de figure ce que "appliqué à $S$" veut dire, et le coût en question. \\ \\ \\
+
+\includegraphics{forme s ss.png}
+
+Par exemple, selon le niveau de précision voulu, une rotation à 90° pourrait convenir pour l'image qui précède. Il faut définir le coût de manière à ce que 3 rotations de suite ne conviennent pas.
+
+Beaucoup de domaines de recherche actuels utilisent l'appariement de formes: en imagerie médicale, on ne transforme pas les cloches en chapeau, mais on peut déformer une carte idéalisée du cerveau humain pour la calquer sur l'IRM d'un patient. En biologie, si l'on connaît les formes actuelles et anciennes d'une feuille par exemple, on peut essayer de trouver comment elle a évolué en étudiant les différents appariements possibles.
+
+\subsection*{Deux cas d'appariements possibles}
+\fbox{\textsc{Cas 1: l'appariement exact $(E)$}}  
+
+On cherche un appariement tel que $\varphi \bullet S = T $, avec un coût minimal. Il faut définir l'ensemble $G$ des appariements $\varphi$ possibles, et la quantité $c$ du coût. On cherche ensuite la quantité $$ inf \{c(\varphi) \vert \varphi \in G, \varphi \bullet S = T \}$$
+
+\fbox{\textsc{Cas 2: l'appariement inexact $(I)$}}  
+
+En pratique, on peut se passer de certains détails dus au bruit lors du prélèvement de données. On utilisera donc l'appariement inexact. \\ Cette fois, la quantité recherchée est la suivante: $$ inf \{c(\varphi) + \lambda D( \varphi \bullet S, T)^2\}$$
+
+En plus de $G$ et $c$, il faut en plus définir la distance $D$ et le paramètre $\lambda$ cette fois. \\ \\ 
+
+\includegraphics{schema (I).png}
+
+On se retrouve avec le problème de définition d'un \textit{modèle de déformation} ($G$), d'un coût, et d'une \textit{attache aux données} ($D$)
+
+\subsection*{Premier cas de modèle de déformation: les petites déformations}
+
+\fbox{\textsc{Définition}} Soit un champ de vecteur $V \in {C}^{n}({\mathbb{R}} ^{2}, {\mathbb{R}} ^{2})$. On se limite pour l'instant a $V$ de dimension finie. 
+
+On prends alors comme modèle de déformation l'espace affine $G = I_2 + V$
+et comme coût la fonction $c: I_2$
+
+Chaque déformation $\varphi$ s'écrira donc sous la forme $\varphi = I_2 + v$, $v \in V$. 
+Si $S= (x_1, x_2, ..., x_m)$, on aura $\varphi \bullet S = (x_1 + v(x_1), x_2 + v(x_2), ..., x_m + v(x_m))$ \\ 
+
+
+
+    \redtext{ 
+   1.  Dans le cas des petites déformations, est-ce qu'il existe une solution à $(E)$?}
+    
+    
+
+\subsection*{Premiers cas d'attaches aux données}
+\fbox{\textsc{distance euclidienne}} On prends $S= (x_1, x_2, ..., x_n), T=(y_1, y_2, ..., y_p).$ Si l'on suppose $n=p$ et $\forall i \in  [\![1;n]\!] , x_i$ correspond à $y_i$, alors la distance euclidienne peut être utilisée pour $D$: 
+
+Dans ce cas, on aura $$D(\varphi \bullet S, T)= \sum_{i=1}^{n} \vert \varphi (x_i - y_i) \vert ^2$$
+\fbox{\textsc{Autre proposition de distance}}
+On suppose toujours $n=p$, mais si cette fois on sait pas quel point de $S$ correspond à quel 
+point de $T$, on peut utiliser la fonction suivante pour $D$: \\ 
+
+Si $A = (a_1, a_2, ..., a_n), B=(b_1, b_2, b_n)$, alors $$Dist(A,B) = max( max_{i} \{(min_{j} \vert a_i - b_j \vert \}, max_{j} \{ min_{i} \vert a_i - b_j \vert \})$$ 
+
+\redtext{ 
+   2.  Dans le cas des petites déformations et en utilisant $D = Dist$, existe-t-il une solution pour $(I)$?} \\
+
+\redtext{ 
+   3. Est-ce que les éléments de $G$ sont des difféomorphismes? Si non essayer de trouver un/des critères pour qu'ils le soient, ou des exemples ou contre-exemples.}
+
+\redtext{ 
+   4. Vérifier que $Dist$ est bien une distance. \textit{Pour l'inégalité triangulaire, on peut considérer les voisinages $V_r(A) = \{ z \in \mathbb{R}^2; inf_{a \in A} |z - a| \leq r \}$
+   } ("frontière de $A$ décalée de $r$")} 
+\subsection*{Implémentation de la solution}
+\includegraphics{quadrillage.png}
+
+On a une grille de points $(Z_k)_{k \in [\![1;D]\!]}$ 2à 2 distincts. Soit $\sigma > 0$. On considère $$V := \{ x \mapsto \sum_{k=1}^{D} \alpha_k e^ {\frac{-|x- z_k|^2}{2 \sigma ^2}} | \alpha_k \in \mathbb{R} , k \in [\![1;D]\!] \}$$
+
+\redtext{ 
+   5. Implementation en python de la solution à $(I)$ dans le cas des petites déformations, en utilisant $D=Dist$, et le champ de vecteur défini ci-dessus pour $V$, après avoir choisi les $\alpha_k$}
+
+   On peut soit trouver le résultat exact, soit utiliser une descente de gradients sur $$J: \alpha = (\alpha_1, ..., \alpha_n) \in \mathbb{{R}^2}^D \mapsto \sum_{k=1}^{D} |\alpha_k ^2| + \lambda Dist(\varphi_\alpha \bullet S, T) $$ où $\varphi_\alpha = I_2 + \sum_{k=1}^{D} \sum_{l=1}^{2} v_{k,l}^{\alpha_k(l)}$ et $v_k: x \mapsto e^{\frac{-|x-z_k|^2}{2\sigma^2}}e_l$ avec $e_1: (1,0), e_2=(0,1)$
+
+   Si on arrive pas a calculer $\nabla J(\alpha)$, on peu utiliser \textit{pytorch} qui le fait directement. 
+
+\redtext{ 
+   6. Est-ce que les $v_{k,l}$ forment une base de $V$?} 
+
+   
+
+ 
+
+
+
+   
+   
+
+
+
+
+
+\end{document}
